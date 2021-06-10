@@ -23,7 +23,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <quarkus.version>1.13.3.Final</quarkus.version>
         <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
-        <apicurio.codegen.version>0.2.15.Final</apicurio.codegen.version>
+        <apicurio.codegen.version>0.2.49-SNAPSHOT</apicurio.codegen.version>
     </properties>
     <dependencyManagement>
         <dependencies>
