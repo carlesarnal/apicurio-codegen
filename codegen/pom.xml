@@ -11,6 +11,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>codegen</artifactId>
+    <name>Apicurio Codegen Extension - Deployment</name>
 
     <dependencies>
         <dependency>
@@ -21,6 +22,11 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-devtools-utilities</artifactId>
             <version>${quarkus.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.apicurio</groupId>
+            <artifactId>apicurio-studio-be-hub-codegen</artifactId>
+            <version>${apicurio.codegen.version}</version>
         </dependency>
     </dependencies>
 </project>
