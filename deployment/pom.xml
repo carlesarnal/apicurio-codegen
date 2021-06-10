@@ -4,8 +4,9 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>io.apicurio</groupId>
-    <artifactId>codegen-extension-parent</artifactId>
+    <artifactId>quarkus-apicurio-codegen-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
   </parent>
   <artifactId>codegen-extension-deployment</artifactId>
   <name>Apicurio Codegen Extension - Deployment</name>
