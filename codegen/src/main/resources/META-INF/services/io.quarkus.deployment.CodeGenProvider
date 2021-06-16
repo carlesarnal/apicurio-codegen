@@ -1,1 +1,1 @@
-io.quarkus.apicurio.codegen.deployment.OpenApiCodeGenProvider
+io.quarkus.apicurio.codegen.deployment.OpenApiServerCodeGen
