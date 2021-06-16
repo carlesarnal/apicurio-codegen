@@ -4,8 +4,11 @@ import io.quarkus.bootstrap.prebuild.CodeGenException;
 import io.quarkus.deployment.CodeGenContext;
 import io.quarkus.deployment.CodeGenProvider;
 import io.quarkus.utilities.OS;
+import org.apache.commons.io.FileUtils;
 import org.jboss.logging.Logger;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -56,10 +59,9 @@ public class OpenApiServerCodeGen implements CodeGenProvider {
                             .filter(s -> s.endsWith(YAML) || s.endsWith(YML) || s.endsWith(JSON))
                             .map(this::escapeWhitespace)
                             .collect(Collectors.toList());
+
                     for (String openApiFile : openApiFiles) {
-                        final OpenApiServerGeneratorWrapper generator = new OpenApiServerGeneratorWrapper(openApiFile,
-                                outDir.toString());
-                        generator.generate();
+                        generate(outDir.toString(), openApiFile);
                     }
                     return true;
                 }
@@ -68,6 +70,15 @@ public class OpenApiServerCodeGen implements CodeGenProvider {
             throw new CodeGenException("Failed to create java project from openapi definition", e);
         }
         return false;
+    }
+
+    private void generate(String outputDir, String openApiFile) throws IOException {
+
+        final OpenApiServerGeneratorWrapper generator = new OpenApiServerGeneratorWrapper(openApiFile);
+        final ByteArrayOutputStream generate = generator.generate();
+
+        final File tempFile = Path.of(outputDir, openApiFile).toFile();
+        FileUtils.writeByteArrayToFile(tempFile, generate.toByteArray());
     }
 
     private String escapeWhitespace(String path) {

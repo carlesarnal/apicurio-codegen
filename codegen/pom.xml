@@ -12,6 +12,18 @@
 
     <artifactId>codegen</artifactId>
     <name>Apicurio Codegen Extension - Deployment</name>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>11</source>
+                    <target>11</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <dependencies>
         <dependency>
@@ -27,6 +39,12 @@
             <groupId>io.apicurio</groupId>
             <artifactId>apicurio-studio-be-hub-codegen</artifactId>
             <version>${apicurio.codegen.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-junit5-internal</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>
