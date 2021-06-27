@@ -60,16 +60,16 @@
         }
       },
       "parameters": [
-      {
-        "name": "beerId",
-        "in": "path",
-        "description": "Unique ID of a beer.",
-        "required": true,
-        "schema": {
-          "format": "int32",
-          "type": "integer"
+        {
+          "name": "beerId",
+          "in": "path",
+          "description": "Unique ID of a beer.",
+          "required": true,
+          "schema": {
+            "format": "int32",
+            "type": "integer"
+          }
         }
-      }
       ]
     },
     "/breweries": {
@@ -159,16 +159,16 @@
         }
       },
       "parameters": [
-      {
-        "name": "breweryId",
-        "in": "path",
-        "description": "Unique ID of a brewery.",
-        "required": true,
-        "schema": {
-          "format": "int32",
-          "type": "integer"
+        {
+          "name": "breweryId",
+          "in": "path",
+          "description": "Unique ID of a brewery.",
+          "required": true,
+          "schema": {
+            "format": "int32",
+            "type": "integer"
+          }
         }
-      }
       ]
     },
     "/breweries/{breweryId}/beers": {
@@ -210,15 +210,15 @@
         }
       },
       "parameters": [
-      {
-        "name": "breweryId",
-        "in": "path",
-        "required": true,
-        "schema": {
-          "format": "int32",
-          "type": "integer"
+        {
+          "name": "breweryId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "format": "int32",
+            "type": "integer"
+          }
         }
-      }
       ]
     },
     "/beers": {
@@ -331,13 +331,13 @@
     }
   },
   "tags": [
-  {
-    "name": "beer",
-    "description": ""
-  },
-  {
-    "name": "brewery",
-    "description": ""
-  }
+    {
+      "name": "beer",
+      "description": ""
+    },
+    {
+      "name": "brewery",
+      "description": ""
+    }
   ]
 }

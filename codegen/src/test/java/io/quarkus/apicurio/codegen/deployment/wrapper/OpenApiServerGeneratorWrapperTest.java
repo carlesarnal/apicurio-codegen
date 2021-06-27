@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -40,19 +41,19 @@ public class OpenApiServerGeneratorWrapperTest {
                     String expectedFilesPath = "/generated-api";
                     URL expectedFile = getClass().getClassLoader().getResource(getClass().getSimpleName() + "/" + expectedFilesPath + "/" + name);
                     if (expectedFile == null && "PROJECT_GENERATION_FAILED.txt".equals(name)) {
-                        String errorLog = IOUtils.toString(zipInputStream, Charset.forName("UTF-8"));
+                        String errorLog = IOUtils.toString(zipInputStream, StandardCharsets.UTF_8);
                         System.out.println("----- UNEXPECTED ERROR LOG -----");
                         System.out.println(errorLog);
                         System.out.println("----- UNEXPECTED ERROR LOG -----");
                     }
                     Assertions.assertNotNull(name);
-                    String expected = IOUtils.toString(expectedFile, Charset.forName("UTF-8"));
+                    String expected = IOUtils.toString(expectedFile, StandardCharsets.UTF_8);
 
-                    String actual = IOUtils.toString(zipInputStream, Charset.forName("UTF-8"));
+                    String actual = IOUtils.toString(zipInputStream, StandardCharsets.UTF_8);
                     System.out.println("-----");
                     System.out.println(actual);
                     System.out.println("-----");
-                    Assertions.assertEquals(expected, actual);
+                    Assertions.assertEquals(normalizeString(expected), normalizeString(actual));
                 }
                 zipEntry = zipInputStream.getNextEntry();
             }
