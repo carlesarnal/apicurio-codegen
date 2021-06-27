@@ -1,8 +1,8 @@
-name: Codegen Extension
+name: Open Api Server Codegen Extension
 #description: Codegen Extension ...
 metadata:
 #  keywords:
-#    - codegen-extension
+#    - openapi-server-codegen-extension
 #  guide: ...
 #  categories:
 #    - "miscellaneous"
