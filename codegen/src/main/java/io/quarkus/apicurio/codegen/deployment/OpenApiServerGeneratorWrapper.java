@@ -3,6 +3,7 @@ package io.quarkus.apicurio.codegen.deployment;
 import io.apicurio.hub.api.codegen.OpenApi2JaxRs;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 public class OpenApiServerGeneratorWrapper {
@@ -18,7 +19,7 @@ public class OpenApiServerGeneratorWrapper {
 
         generator = new OpenApi2JaxRs();
         generator.setSettings(settings);
-        generator.setOpenApiDocument(specFilePath);
+        generator.setOpenApiDocument(new FileInputStream(specFilePath));
     }
 
     public ByteArrayOutputStream generate() throws IOException {

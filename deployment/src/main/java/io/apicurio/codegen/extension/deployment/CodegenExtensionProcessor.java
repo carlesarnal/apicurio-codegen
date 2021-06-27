@@ -5,7 +5,7 @@ import io.quarkus.deployment.builditem.FeatureBuildItem;
 
 class CodegenExtensionProcessor {
 
-    private static final String FEATURE = "codegen-extension";
+    private static final String FEATURE = "openapi-server-codegen-extension";
 
     @BuildStep
     FeatureBuildItem feature() {

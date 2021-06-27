@@ -1,32 +1,32 @@
 package io.quarkus.apicurio.codegen.deployment.wrapper;
 
 import io.quarkus.apicurio.codegen.deployment.OpenApiServerGeneratorWrapper;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Paths;
+import java.nio.charset.Charset;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class OpenApiServerGeneratorWrapperTest {
 
     @Test
-    void generatePetStore() throws URISyntaxException, IOException {
+    void generateServerClasses() throws IOException {
 
-        final String petstoreOpenApi = this.getClass().getResource("/openapi/beer-api.json").getPath();
-        final String targetPath = Paths.get(getClass().getResource("/").toURI()).getParent().toString() + "/openapi-gen";
-        final OpenApiServerGeneratorWrapper generatorWrapper = new OpenApiServerGeneratorWrapper(petstoreOpenApi);
+        final String openApiDefinition = this.getClass().getResource("/OpenApiServerGeneratorWrapperTest/beer-api.json").getPath();
+        final OpenApiServerGeneratorWrapper generatorWrapper = new OpenApiServerGeneratorWrapper(openApiDefinition);
         final ByteArrayOutputStream generate = generatorWrapper.generate();
 
+        File tempFile = File.createTempFile("api", ".zip");
+        FileUtils.writeByteArrayToFile(tempFile, generate.toByteArray());
+        System.out.println("Generated ZIP (debug) can be found here: " + tempFile.getAbsolutePath());
 
         // Validate the result
         try (ZipInputStream zipInputStream = new ZipInputStream(new ByteArrayInputStream(generate.toByteArray()))) {
@@ -34,21 +34,25 @@ public class OpenApiServerGeneratorWrapperTest {
             while (zipEntry != null) {
                 if (!zipEntry.isDirectory()) {
                     String name = zipEntry.getName();
+                    System.out.println(name);
+                    Assertions.assertNotNull(name);
 
-                    assertNotNull(name);
-
-                    URL expectedFile = getClass().getClassLoader().getResource(getClass().getSimpleName() + "/" + targetPath + "/" + name);
+                    String expectedFilesPath = "/generated-api";
+                    URL expectedFile = getClass().getClassLoader().getResource(getClass().getSimpleName() + "/" + expectedFilesPath + "/" + name);
                     if (expectedFile == null && "PROJECT_GENERATION_FAILED.txt".equals(name)) {
-                        String errorLog = IOUtils.toString(zipInputStream, StandardCharsets.UTF_8);
+                        String errorLog = IOUtils.toString(zipInputStream, Charset.forName("UTF-8"));
                         System.out.println("----- UNEXPECTED ERROR LOG -----");
                         System.out.println(errorLog);
                         System.out.println("----- UNEXPECTED ERROR LOG -----");
                     }
-                    String expected = IOUtils.toString(expectedFile, StandardCharsets.UTF_8);
+                    Assertions.assertNotNull(name);
+                    String expected = IOUtils.toString(expectedFile, Charset.forName("UTF-8"));
 
-                    String actual = IOUtils.toString(zipInputStream, StandardCharsets.UTF_8);
-
-                    assertEquals("Expected vs. actual failed for entry: " + name, normalizeString(expected), normalizeString(actual));
+                    String actual = IOUtils.toString(zipInputStream, Charset.forName("UTF-8"));
+                    System.out.println("-----");
+                    System.out.println(actual);
+                    System.out.println("-----");
+                    Assertions.assertEquals(expected, actual);
                 }
                 zipEntry = zipInputStream.getNextEntry();
             }
